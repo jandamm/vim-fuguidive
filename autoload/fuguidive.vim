@@ -18,12 +18,12 @@ function! s:init() abort
 
 	" TODO: Store existing
 	let g:leaderGuide_map['<buffer>'] = s:fuguidive
-	let g:leaderGuide_map['['] = s:fuguidive__SBO
-	let g:leaderGuide_map[']'] = s:fuguidive__SBC
-	let g:leaderGuide_map['c'] = s:fuguidive_c
-	let g:leaderGuide_map['d'] = s:fuguidive_d
-	let g:leaderGuide_map['g'] = s:fuguidive_g
-	let g:leaderGuide_map['r'] = s:fuguidive_r
+	let g:leaderGuide_map['['] = s:fuguidive['[']
+	let g:leaderGuide_map[']'] = s:fuguidive[']']
+	let g:leaderGuide_map['c'] = s:fuguidive['c']
+	let g:leaderGuide_map['d'] = s:fuguidive['d']
+	let g:leaderGuide_map['g'] = s:fuguidive['g']
+	let g:leaderGuide_map['r'] = s:fuguidive['r']
 
 	let s:fuguidive_is_active = 1
 
@@ -63,31 +63,22 @@ endfunction
 
 let s:fuguidive_keys = [ '[', ']', 'c', 'd', 'g', 'r' ]
 
-let s:fuguidive__SBO = { 'name': 'Jump backward'           }
-let s:fuguidive__SBC = { 'name': 'Jump forward'            }
-let s:fuguidive__C_W = { 'name': 'C-W'                     }
-let s:fuguidive_c    = { 'name': 'Commit, Checkout, Stash' }
-let s:fuguidive_c.b  = { 'name': 'Branch'                  }
-let s:fuguidive_c.m  = { 'name': 'Merge'                   }
-let s:fuguidive_c.o  = { 'name': 'Checkout'                }
-let s:fuguidive_c.r  = { 'name': 'Revert'                  }
-let s:fuguidive_c.R  = { 'name': 'Reset author'            }
-let s:fuguidive_c.v  = { 'name': 'Verbose'                 }
-let s:fuguidive_c.z  = { 'name': 'Stash'                   }
-let s:fuguidive_d    = { 'name': 'Diff'                    }
-let s:fuguidive_g    = { 'name': 'Navigation'              }
-let s:fuguidive_r    = { 'name': 'Rebase'                  }
+let s:fuguidive          = { 'name'  : 'Fugitive'              }
 
-let s:fuguidive = {
-			\ 'name'  : 'Fugitive',
-			\ '['     : s:fuguidive__SBO,
-			\ ']'     : s:fuguidive__SBC,
-			\ '<C-W>' : s:fuguidive__C_W,
-			\ 'c'     : s:fuguidive_c,
-			\ 'd'     : s:fuguidive_d,
-			\ 'g'     : s:fuguidive_g,
-			\ 'r'     : s:fuguidive_r,
-			\ }
+let s:fuguidive['[']     = { 'name': 'Jump backward'           }
+let s:fuguidive[']']     = { 'name': 'Jump forward'            }
+let s:fuguidive['<C-w>'] = { 'name': 'C-w'                     }
+let s:fuguidive.c        = { 'name': 'Commit, Checkout, Stash' }
+let s:fuguidive.c.b      = { 'name': 'Branch'                  }
+let s:fuguidive.c.m      = { 'name': 'Merge'                   }
+let s:fuguidive.c.o      = { 'name': 'Checkout'                }
+let s:fuguidive.c.r      = { 'name': 'Revert'                  }
+let s:fuguidive.c.R      = { 'name': 'Reset author'            }
+let s:fuguidive.c.v      = { 'name': 'Verbose'                 }
+let s:fuguidive.c.z      = { 'name': 'Stash'                   }
+let s:fuguidive.d        = { 'name': 'Diff'                    }
+let s:fuguidive.g        = { 'name': 'Navigation'              }
+let s:fuguidive.r        = { 'name': 'Rebase'                  }
 
 " }}}1
 
