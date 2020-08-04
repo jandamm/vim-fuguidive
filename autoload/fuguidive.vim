@@ -28,8 +28,9 @@ function! s:init() abort
 
 	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
-	" TODO: Make configurable
-	nmap <buffer> g? <Plug>(fuguidive)
+	if exists('g:fuguidive_map') && !empty('g:fuguidive_map')
+		execute 'nmap <buffer> '.g:fuguidive_map.' <Plug>(fuguidive)'
+	endif
 
 	for key in s:fuguidive_keys
 		execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
