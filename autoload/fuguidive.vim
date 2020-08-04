@@ -4,6 +4,7 @@ endif
 let g:autoloaded_fuguidive = 1
 
 let s:fuguidive_is_active = 0
+let s:fuguidive_backup = {}
 
 function! fuguidive#init() abort
 	augroup fuguidive_buffer
@@ -16,10 +17,9 @@ endfunction
 function! s:init() abort
 	if s:fuguidive_is_active | return | endif
 
-	" TODO: Store existing
-	let g:leaderGuide_map['<buffer>'] = s:fuguidive
+	call s:set_key('<buffer>', s:fuguidive)
 	for key in s:fuguidive_keys
-		let g:leaderGuide_map[key] = s:fuguidive[key]
+		call s:set_key(key)
 	endfor
 
 	let s:fuguidive_is_active = 1
@@ -41,13 +41,27 @@ endfunction
 function! s:deinit() abort
 	if !s:fuguidive_is_active | return | endif
 
-	" TODO: Restore existing
-	unlet g:leaderGuide_map['<buffer>']
-	for key in s:fuguidive_keys
-		unlet g:leaderGuide_map[key]
+	for key in ['<buffer>'] + s:fuguidive_keys
+		call s:restore_key(key)
 	endfor
 
 	let s:fuguidive_is_active = 0
+	let s:fuguidive_backup = {}
+endfunction
+
+function! s:set_key(key, ...) abort
+	if has_key(g:leaderGuide_map, a:key)
+		let s:fuguidive_backup[a:key] = g:leaderGuide_map[a:key]
+	endif
+	let g:leaderGuide_map[a:key] = a:0 ? a:1 : s:fuguidive[a:key]
+endfunction
+
+function! s:restore_key(key) abort
+	if has_key(s:fuguidive_backup, a:key)
+		let g:leaderGuide_map[a:key] = s:fuguidive_backup[a:key]
+	else
+		unlet g:leaderGuide_map[a:key]
+	endif
 endfunction
 
 " Define group names {{{1
