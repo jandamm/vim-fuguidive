@@ -18,28 +18,22 @@ function! s:init() abort
 
 	" TODO: Store existing
 	let g:leaderGuide_map['<buffer>'] = s:fuguidive
-	let g:leaderGuide_map['['] = s:fuguidive['[']
-	let g:leaderGuide_map[']'] = s:fuguidive[']']
-	let g:leaderGuide_map['c'] = s:fuguidive['c']
-	let g:leaderGuide_map['d'] = s:fuguidive['d']
-	let g:leaderGuide_map['g'] = s:fuguidive['g']
-	let g:leaderGuide_map['r'] = s:fuguidive['r']
+	for key in s:fuguidive_keys
+		let g:leaderGuide_map[key] = s:fuguidive[key]
+	endfor
 
 	let s:fuguidive_is_active = 1
 
 	if exists('s:fuguidive_is_setup') | return | endif
 
-	nmap <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
+	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
 	" TODO: Make configurable
 	nmap <buffer> g? <Plug>(fuguidive)
 
-	nmap <buffer> [ :LeaderGuide '['<CR>
-	nmap <buffer> ] :LeaderGuide ']'<CR>
-	nmap <buffer> c :LeaderGuide 'c'<CR>
-	nmap <buffer> d :LeaderGuide 'd'<CR>
-	nmap <buffer> g :LeaderGuide 'g'<CR>
-	nmap <buffer> r :LeaderGuide 'r'<CR>
+	for key in s:fuguidive_keys
+		execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
+	endfor
 
 	let b:fuguidive_is_setup = 1
 endfunction
@@ -49,12 +43,9 @@ function! s:deinit() abort
 
 	" TODO: Restore existing
 	unlet g:leaderGuide_map['<buffer>']
-	unlet g:leaderGuide_map['[']
-	unlet g:leaderGuide_map[']']
-	unlet g:leaderGuide_map['c']
-	unlet g:leaderGuide_map['d']
-	unlet g:leaderGuide_map['g']
-	unlet g:leaderGuide_map['r']
+	for key in s:fuguidive_keys
+		unlet g:leaderGuide_map[key]
+	endfor
 
 	let s:fuguidive_is_active = 0
 endfunction
@@ -66,6 +57,7 @@ let s:fuguidive_keys = [ '[', ']', 'c', 'd', 'g', 'r' ]
 let s:fuguidive          = { 'name'  : 'Fugitive'              }
 
 let s:fuguidive['[']     = { 'name': 'Jump backward'           }
+
 let s:fuguidive[']']     = { 'name': 'Jump forward'            }
 let s:fuguidive['<C-w>'] = { 'name': 'C-w'                     }
 let s:fuguidive.c        = { 'name': 'Commit, Checkout, Stash' }
