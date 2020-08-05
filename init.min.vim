@@ -7,7 +7,7 @@ packadd vim-fugitive
 packadd vim-fuguidive
 packadd vim-leader-guide
 
-let g:fuguidive_map = '<Space>'
+let g:fuguidive_map_help = '<Space>'
 
 Gstatus
 only

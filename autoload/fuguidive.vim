@@ -34,8 +34,8 @@ function! s:init() abort
 
 	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
-	if exists('g:fuguidive_map') && !empty('g:fuguidive_map')
-		execute 'nmap <buffer> '.g:fuguidive_map.' <Plug>(fuguidive)'
+	if exists('g:fuguidive_map_help') && !empty('g:fuguidive_map_help')
+		execute 'nmap <buffer> '.g:fuguidive_map_help.' <Plug>(fuguidive)'
 	endif
 
 	if g:fuguidive_map_interactive
