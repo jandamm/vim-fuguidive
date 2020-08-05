@@ -19,9 +19,9 @@ endfunction
 function! s:init() abort
 	if s:fuguidive_is_active | return | endif
 
-	call s:set_key('<buffer>', s:fuguidive)
+	call s:set_map('<buffer>', s:fuguidive)
 	for key in s:fuguidive_keys
-		call s:set_key(key)
+		call s:set_map(key)
 	endfor
 
 	let s:fuguidive_is_active = 1
@@ -45,21 +45,21 @@ function! s:deinit() abort
 	if !s:fuguidive_is_active | return | endif
 
 	for key in ['<buffer>'] + s:fuguidive_keys
-		call s:restore_key(key)
+		call s:restore_map(key)
 	endfor
 
 	let s:fuguidive_is_active = 0
 	let s:fuguidive_backup = {}
 endfunction
 
-function! s:set_key(key, ...) abort
+function! s:set_map(key, ...) abort
 	if has_key(g:leaderGuide_map, a:key)
 		let s:fuguidive_backup[a:key] = g:leaderGuide_map[a:key]
 	endif
 	let g:leaderGuide_map[a:key] = a:0 ? a:1 : s:fuguidive[a:key]
 endfunction
 
-function! s:restore_key(key) abort
+function! s:restore_map(key) abort
 	if has_key(s:fuguidive_backup, a:key)
 		let g:leaderGuide_map[a:key] = s:fuguidive_backup[a:key]
 	else
