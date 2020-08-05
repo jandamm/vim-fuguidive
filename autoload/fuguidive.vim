@@ -8,6 +8,10 @@ if !exists('s:fuguidive_is_active')
 	let s:fuguidive_backup = {}
 endif
 
+if !exists('g:fuguidive_map_interactive')
+	let g:fuguidive_map_interactive = 1
+endif
+
 function! fuguidive#init() abort
 	augroup fuguidive_buffer
 		autocmd! * <buffer=abuf>
@@ -34,9 +38,12 @@ function! s:init() abort
 		execute 'nmap <buffer> '.g:fuguidive_map.' <Plug>(fuguidive)'
 	endif
 
-	for key in s:fuguidive_keys + s:fuguidive_subkeys
-		execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
-	endfor
+	if g:fuguidive_map_interactive
+		for key in s:fuguidive_keys + s:fuguidive_subkeys
+			execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
+		endfor
+		nnoremap <silent> <buffer> gg gg
+	endif
 
 	let b:fuguidive_is_setup = 1
 endfunction
