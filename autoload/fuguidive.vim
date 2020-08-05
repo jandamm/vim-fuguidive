@@ -34,7 +34,7 @@ function! s:init() abort
 		execute 'nmap <buffer> '.g:fuguidive_map.' <Plug>(fuguidive)'
 	endif
 
-	for key in s:fuguidive_keys
+	for key in s:fuguidive_keys + s:fuguidive_subkeys
 		execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
 	endfor
 
@@ -67,27 +67,40 @@ function! s:restore_map(key) abort
 	endif
 endfunction
 
-" Define group names {{{1
+" Define groups and names {{{1
 
-let s:fuguidive_keys = [ '[', ']', 'c', 'd', 'g', 'r' ]
+let s:fuguidive = { 'name': 'Fugitive' }
+let s:fuguidive_keys = []
+let s:fuguidive_subkeys = []
 
-let s:fuguidive          = { 'name'  : 'Fugitive'              }
+" Define key helper {{{2
+function! s:define_key(key, name) abort
+	let s:fuguidive[a:key] = { 'name': a:name }
+	call add(s:fuguidive_keys, a:key)
+endfunction
+function! s:define_subkey(base, key, name) abort
+	let s:fuguidive[a:base][a:key] = { 'name': a:name }
+	call add(s:fuguidive_subkeys, a:base.a:key)
+endfunction
+" }}}2
 
-let s:fuguidive['[']     = { 'name': 'Jump backward'           }
+" Add name but ignore from any mappings
+let s:fuguidive['<C-W>'] = { 'name': 'C-w' }
 
-let s:fuguidive[']']     = { 'name': 'Jump forward'            }
-let s:fuguidive['<C-w>'] = { 'name': 'C-w'                     }
-let s:fuguidive.c        = { 'name': 'Commit, Checkout, Stash' }
-let s:fuguidive.c.b      = { 'name': 'Branch'                  }
-let s:fuguidive.c.m      = { 'name': 'Merge'                   }
-let s:fuguidive.c.o      = { 'name': 'Checkout'                }
-let s:fuguidive.c.r      = { 'name': 'Revert'                  }
-let s:fuguidive.c.R      = { 'name': 'Reset author'            }
-let s:fuguidive.c.v      = { 'name': 'Verbose'                 }
-let s:fuguidive.c.z      = { 'name': 'Stash'                   }
-let s:fuguidive.d        = { 'name': 'Diff'                    }
-let s:fuguidive.g        = { 'name': 'Navigation'              }
-let s:fuguidive.r        = { 'name': 'Rebase'                  }
+call s:define_key('[', 'Jump backward')
+call s:define_key(']', 'Jump forward')
+call s:define_key('c', 'Commit, Checkout, Stash')
+call s:define_key('d', 'Diff')
+call s:define_key('g', 'Navigation')
+call s:define_key('r', 'Rebase')
+
+call s:define_subkey('c', 'b', 'Branch')
+call s:define_subkey('c', 'm', 'Merge')
+call s:define_subkey('c', 'o', 'Checkout')
+call s:define_subkey('c', 'r', 'Revert')
+call s:define_subkey('c', 'R', 'Reset author')
+call s:define_subkey('c', 'v', 'Verbose')
+call s:define_subkey('c', 'z', 'Stash')
 
 " }}}1
 
