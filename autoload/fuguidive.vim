@@ -30,7 +30,7 @@ function! s:init() abort
 
 	let s:fuguidive_is_active = 1
 
-	if exists('s:fuguidive_is_setup') | return | endif
+	if exists('b:fuguidive_is_setup') | return | endif
 
 	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
