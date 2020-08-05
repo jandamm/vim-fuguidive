@@ -3,8 +3,10 @@ if exists('g:autoloaded_fuguidive')
 endif
 let g:autoloaded_fuguidive = 1
 
-let s:fuguidive_is_active = 0
-let s:fuguidive_backup = {}
+if !exists('s:fuguidive_is_active')
+	let s:fuguidive_is_active = 0
+	let s:fuguidive_backup = {}
+endif
 
 function! fuguidive#init() abort
 	augroup fuguidive_buffer
