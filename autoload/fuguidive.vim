@@ -10,7 +10,10 @@ if !exists('s:fuguidive_is_active')
 endif
 
 if !exists('g:fuguidive_map_interactive')
-	let g:fuguidive_map_interactive = 1
+	let g:fuguidive_map_interactive = 0
+endif
+if exists('g:fuguidive_map_help')
+	let g:fuguidive_map_help = ''
 endif
 
 function! fuguidive#init() abort
