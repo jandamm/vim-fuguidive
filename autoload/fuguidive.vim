@@ -12,7 +12,7 @@ endif
 if !exists('g:fuguidive_map_interactive')
 	let g:fuguidive_map_interactive = 0
 endif
-if exists('g:fuguidive_map_help')
+if !exists('g:fuguidive_map_help')
 	let g:fuguidive_map_help = ''
 endif
 
@@ -38,7 +38,7 @@ function! s:init() abort
 
 	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
-	if exists('g:fuguidive_map_help') && !empty('g:fuguidive_map_help')
+	if !empty('g:fuguidive_map_help')
 		execute 'nmap <buffer> '.g:fuguidive_map_help.' <Plug>(fuguidive)'
 	endif
 
