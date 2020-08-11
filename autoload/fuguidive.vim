@@ -32,6 +32,12 @@ function! s:init() abort
 		call s:set_map(key)
 	endfor
 
+	if g:fuguidive_map_interactive
+		for key in s:fuguidive_subkey_keys
+			call s:set_map(key, s:fuguidive_subkey[key])
+		endfor
+	endif
+
 	let s:fuguidive_is_active = 1
 
 	if exists('b:fuguidive_is_setup') | return | endif
@@ -43,7 +49,7 @@ function! s:init() abort
 	endif
 
 	if g:fuguidive_map_interactive
-		for key in s:fuguidive_keys + s:fuguidive_subkeys
+		for key in s:fuguidive_keys + s:fuguidive_subkey_keys
 			execute 'nmap <silent> <buffer> '.key.' :LeaderGuide "'.key.'"<CR>'
 		endfor
 		nnoremap <silent> <buffer> gg gg
@@ -80,9 +86,10 @@ endfunction
 
 " Define groups and names {{{1
 
-let s:fuguidive = { 'name': 'Fugitive' }
-let s:fuguidive_keys = []
-let s:fuguidive_subkeys = []
+let s:fuguidive             = { 'name': 'Fugitive' }
+let s:fuguidive_keys        = []
+let s:fuguidive_subkey      = {}
+let s:fuguidive_subkey_keys = []
 
 " Define key helper {{{2
 function! s:define_key(key, name) abort
@@ -91,7 +98,8 @@ function! s:define_key(key, name) abort
 endfunction
 function! s:define_subkey(base, key, name) abort
 	let s:fuguidive[a:base][a:key] = { 'name': a:name }
-	call add(s:fuguidive_subkeys, a:base.a:key)
+	let s:fuguidive_subkey[a:base.a:key] = s:fuguidive[a:base][a:key]
+	call add(s:fuguidive_subkey_keys, a:base.a:key)
 endfunction
 " }}}2
 
