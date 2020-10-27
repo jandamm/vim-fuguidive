@@ -40,8 +40,6 @@ function! s:init() abort
 
 	let s:fuguidive_is_active = 1
 
-	if exists('b:fuguidive_is_setup') | return | endif
-
 	nmap <silent> <buffer> <Plug>(fuguidive) :LeaderGuide '<buffer>'<CR>
 
 	if !empty('g:fuguidive_map_help')
@@ -54,8 +52,6 @@ function! s:init() abort
 		endfor
 		nnoremap <silent> <buffer> gg gg
 	endif
-
-	let b:fuguidive_is_setup = 1
 endfunction
 
 function! s:deinit() abort
